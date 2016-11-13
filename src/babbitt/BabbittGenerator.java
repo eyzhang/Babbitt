@@ -128,13 +128,13 @@ public class BabbittGenerator {
     /**
      *
      * @param n Music length, in seconds
-     * @param pitchClasses Set of pitches, e.g. "0 1 2 3 4 5 6 7 8 9 10 11" for full chromatic scale 
+     * @param pitchClasses Set of pitches, e.g. "00 01 02 03 04 05 06 07 08 09 10 11" for full chromatic scale 
      * @return MIDI sequence
      */
     public static Sequence generate(int n, String pitchClasses) {        
         try {
             // music length in seconds
-            int musicLength = n * 24;
+            int musicLength = n * 200;
             
             //  boolean array of pitch classes
             boolean[] noteIsIncluded = new boolean[12];
@@ -153,7 +153,7 @@ public class BabbittGenerator {
             
             //****  Create a new MIDI sequence with 24 ticks per beat and 10 tracks
             int NUM_TRACKS = 10;
-            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ,24,NUM_TRACKS);
+            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ, 24, NUM_TRACKS);
             
             // Obtain all MIDI tracks from the sequence and set up each track
             Track[] t = new Track[NUM_TRACKS];
@@ -219,7 +219,7 @@ public class BabbittGenerator {
             /*
             // write the MIDI sequence to a MIDI file
             File file = new File(filename);
-            MidiSystem.write(seq,1,file);
+            MidiSystem.write(seq, 1, file);
             */
             
             return seq;

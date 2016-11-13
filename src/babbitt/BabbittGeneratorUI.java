@@ -2,8 +2,6 @@ package babbitt;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
 import javax.swing.JFileChooser;
@@ -24,6 +22,7 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
     }
 
     // to store length and pitchClasses inputted by the user
+    private boolean[] noteIsIncluded;
     private Sequence seq;
     private int c;
     
@@ -38,12 +37,26 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         PitchClasses = new javax.swing.JLabel();
-        PitchClassesIn = new javax.swing.JTextField();
         OkButton = new javax.swing.JButton();
         LengthIn = new javax.swing.JTextField();
         Length = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        YesNote0 = new javax.swing.JCheckBox();
+        YesNote2 = new javax.swing.JCheckBox();
+        YesNote4 = new javax.swing.JCheckBox();
+        YesNote5 = new javax.swing.JCheckBox();
+        YesNote7 = new javax.swing.JCheckBox();
+        YesNote9 = new javax.swing.JCheckBox();
+        YesNote11 = new javax.swing.JCheckBox();
+        YesNote3 = new javax.swing.JCheckBox();
+        YesNote1 = new javax.swing.JCheckBox();
+        YesNote6 = new javax.swing.JCheckBox();
+        YesNote8 = new javax.swing.JCheckBox();
+        YesNote10 = new javax.swing.JCheckBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        jSeparator2 = new javax.swing.JSeparator();
+        NumberTracksSlider = new javax.swing.JSlider();
+        NumberTracks = new javax.swing.JLabel();
 
         fileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,9 +68,7 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
         PitchClasses.setText("Pitch classes to include");
 
-        PitchClassesIn.setText("00 01 02 03 04 05 06 07 08 09 10 11");
-
-        OkButton.setText("OK");
+        OkButton.setText("Generate and Save");
         OkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OkButtonActionPerformed(evt);
@@ -66,12 +77,111 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
         LengthIn.setText("60");
 
-        Length.setText("Approximate length (seconds)");
+        Length.setText("Length (s)");
 
         jLabel1.setText("Welcome to the Babbitt Generator!");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel2.setText("Please format the pitch classes as two-digit integers from 00 to 11.");
+        YesNote0.setSelected(true);
+        YesNote0.setText("C");
+        YesNote0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote0ActionPerformed(evt);
+            }
+        });
+
+        YesNote2.setSelected(true);
+        YesNote2.setText("D");
+        YesNote2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote2ActionPerformed(evt);
+            }
+        });
+
+        YesNote4.setSelected(true);
+        YesNote4.setText("E");
+        YesNote4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote4ActionPerformed(evt);
+            }
+        });
+
+        YesNote5.setSelected(true);
+        YesNote5.setText("F");
+        YesNote5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote5ActionPerformed(evt);
+            }
+        });
+
+        YesNote7.setSelected(true);
+        YesNote7.setText("G");
+        YesNote7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote7ActionPerformed(evt);
+            }
+        });
+
+        YesNote9.setSelected(true);
+        YesNote9.setText("A");
+        YesNote9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote9ActionPerformed(evt);
+            }
+        });
+
+        YesNote11.setSelected(true);
+        YesNote11.setText("B");
+        YesNote11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote11ActionPerformed(evt);
+            }
+        });
+
+        YesNote3.setSelected(true);
+        YesNote3.setText("D#");
+        YesNote3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote3ActionPerformed(evt);
+            }
+        });
+
+        YesNote1.setSelected(true);
+        YesNote1.setText("C#");
+        YesNote1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote1ActionPerformed(evt);
+            }
+        });
+
+        YesNote6.setSelected(true);
+        YesNote6.setText("F#");
+        YesNote6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote6ActionPerformed(evt);
+            }
+        });
+
+        YesNote8.setSelected(true);
+        YesNote8.setText("G#");
+        YesNote8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote8ActionPerformed(evt);
+            }
+        });
+
+        YesNote10.setSelected(true);
+        YesNote10.setText("A#");
+        YesNote10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                YesNote10ActionPerformed(evt);
+            }
+        });
+
+        NumberTracksSlider.setMajorTickSpacing(10);
+        NumberTracksSlider.setMaximum(50);
+        NumberTracksSlider.setMinorTickSpacing(5);
+
+        NumberTracks.setText("Number of tracks");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,23 +191,44 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(NumberTracks)
+                        .addGap(18, 18, 18)
+                        .addComponent(NumberTracksSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(OkButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(Length, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(LengthIn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel1)
+                    .addComponent(PitchClasses)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(PitchClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Length, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PitchClassesIn, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                            .addComponent(LengthIn))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(OkButton)
-                        .addGap(10, 10, 10))))
+                            .addComponent(YesNote0, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(YesNote1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(YesNote3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(YesNote2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(YesNote4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(YesNote6)
+                            .addComponent(YesNote5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(YesNote7)
+                            .addComponent(YesNote8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(YesNote9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(YesNote10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(YesNote11, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,15 +239,41 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LengthIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Length))
+                .addGap(9, 9, 9)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(PitchClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PitchClassesIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(PitchClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(YesNote0)
+                                    .addComponent(YesNote2)
+                                    .addComponent(YesNote4)
+                                    .addComponent(YesNote5)
+                                    .addComponent(YesNote7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(YesNote3)
+                                    .addComponent(YesNote1)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(YesNote6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(YesNote8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(YesNote9)
+                            .addComponent(YesNote11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(YesNote10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NumberTracks)
+                    .addComponent(NumberTracksSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23)
                 .addComponent(OkButton)
                 .addContainerGap())
         );
@@ -127,25 +284,25 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
     private void OkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OkButtonActionPerformed
         // read in the user input
         int length = Integer.parseInt(LengthIn.getText());
-        String pitchClasses = PitchClassesIn.getText();
+        noteIsIncluded = new boolean[12];
+        
+        // read in the checkboxes
+        noteIsIncluded[0] = YesNote0.isSelected();
+        noteIsIncluded[1] = YesNote1.isSelected();
+        noteIsIncluded[2] = YesNote2.isSelected();
+        noteIsIncluded[3] = YesNote3.isSelected();
+        noteIsIncluded[4] = YesNote4.isSelected();
+        noteIsIncluded[5] = YesNote5.isSelected();
+        noteIsIncluded[6] = YesNote6.isSelected();
+        noteIsIncluded[7] = YesNote7.isSelected();
+        noteIsIncluded[8] = YesNote8.isSelected();
+        noteIsIncluded[9] = YesNote9.isSelected();
+        noteIsIncluded[10] = YesNote10.isSelected();
+        noteIsIncluded[11] = YesNote11.isSelected();
         
         // generate MIDI sequence
-        seq = BabbittGenerator.generate(length, pitchClasses);
+        seq = BabbittGenerator.generate(length, noteIsIncluded);
         
-        /*
-        try {
-            File file = new File("Babbitt.mid");
-            //Create the file
-            if (file.createNewFile()){
-                System.out.println("File is created!");
-            } else {
-                System.out.println("File already exists.");
-            }
-            MidiSystem.write(seq, 1, file);
-        } catch (IOException ex) {
-            Logger.getLogger(BabbittGeneratorUI.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
         // launch the file chooser
         c = fileChooser.showSaveDialog(null);
 
@@ -153,7 +310,15 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
         if (c == JFileChooser.APPROVE_OPTION) {
-             File file = fileChooser.getSelectedFile();         
+             File file = fileChooser.getSelectedFile();    
+             String filename = file.toString();
+             
+             // make sure filename ends with .mid
+             if (!filename.substring(filename.length()-4, filename.length()).equals(".mid")) {
+                 filename = filename.concat(".mid");
+                 file = new File(filename);
+             }   
+                     
             try {
                 // save the MIDI sequence to file
                 MidiSystem.write(seq, 1, file);
@@ -164,6 +329,54 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_fileChooserActionPerformed
+
+    private void YesNote0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote0ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote0ActionPerformed
+
+    private void YesNote2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote2ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote2ActionPerformed
+
+    private void YesNote4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote4ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote4ActionPerformed
+
+    private void YesNote5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote5ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote5ActionPerformed
+
+    private void YesNote7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote7ActionPerformed
+       // intentionally blank
+    }//GEN-LAST:event_YesNote7ActionPerformed
+
+    private void YesNote9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote9ActionPerformed
+       // intentionally blank
+    }//GEN-LAST:event_YesNote9ActionPerformed
+
+    private void YesNote11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote11ActionPerformed
+      // intentionally blank
+    }//GEN-LAST:event_YesNote11ActionPerformed
+
+    private void YesNote3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote3ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote3ActionPerformed
+
+    private void YesNote1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote1ActionPerformed
+      // intentionally blank
+    }//GEN-LAST:event_YesNote1ActionPerformed
+
+    private void YesNote6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote6ActionPerformed
+    // intentionally blank
+    }//GEN-LAST:event_YesNote6ActionPerformed
+
+    private void YesNote8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote8ActionPerformed
+        // intentionally blank
+    }//GEN-LAST:event_YesNote8ActionPerformed
+
+    private void YesNote10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_YesNote10ActionPerformed
+      // intentionally blank
+    }//GEN-LAST:event_YesNote10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -201,11 +414,25 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Length;
     private javax.swing.JTextField LengthIn;
+    private javax.swing.JLabel NumberTracks;
+    private javax.swing.JSlider NumberTracksSlider;
     private javax.swing.JButton OkButton;
     private javax.swing.JLabel PitchClasses;
-    private javax.swing.JTextField PitchClassesIn;
+    private javax.swing.JCheckBox YesNote0;
+    private javax.swing.JCheckBox YesNote1;
+    private javax.swing.JCheckBox YesNote10;
+    private javax.swing.JCheckBox YesNote11;
+    private javax.swing.JCheckBox YesNote2;
+    private javax.swing.JCheckBox YesNote3;
+    private javax.swing.JCheckBox YesNote4;
+    private javax.swing.JCheckBox YesNote5;
+    private javax.swing.JCheckBox YesNote6;
+    private javax.swing.JCheckBox YesNote7;
+    private javax.swing.JCheckBox YesNote8;
+    private javax.swing.JCheckBox YesNote9;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }

@@ -20,12 +20,14 @@ public class BabbittGenerator {
         return Math.random();       
     }
     
+    /*
     // generate a random number between 0 and 1 that's weighted towards 0.5
     private static double weightedRandom1() {
         double x = Math.random() - 0.5;
         double random = 0.5 - Math.sin(x) * Math.abs(x);
         return random;
     }
+    */
     
     // generate a random note length that is long enough to be audible
     private static int randLength() {
@@ -99,7 +101,7 @@ public class BabbittGenerator {
         
             // go through the inclusion array
             for (int i = 0; i < 12; i++) {
-                // if the note is included, exit the loop
+                // if the note is good to go, exit the loop
                 if (noteIsIncluded[i] && ((note - i) % 12 == 0)) {
                     isIncluded = true;
                 }
@@ -127,33 +129,18 @@ public class BabbittGenerator {
     
     /**
      *
-     * @param n Music length, in seconds
-     * @param pitchClasses Set of pitches, e.g. "0 1 2 3 4 5 6 7 8 9 10 11" for full chromatic scale 
+     * @param n Music length, in seconds 
+     * @param noteIsIncluded indicates whether the pitch classes are to be included
      * @return MIDI sequence
      */
-    public static Sequence generate(int n, String pitchClasses) {        
+    public static Sequence generate(int n, boolean[] noteIsIncluded) {        
         try {
             // music length in seconds
-            int musicLength = n * 24;
-            
-            //  boolean array of pitch classes
-            boolean[] noteIsIncluded = new boolean[12];
-            for (int i = 0; i < 10; i++) {
-                boolean contains = pitchClasses.contains("0" + i);
-                if (contains) {
-                    noteIsIncluded[i] = true;
-                }
-            }
-            for (int i = 11; i < 12; i++) {
-                boolean contains = pitchClasses.contains(String.valueOf(i));
-                if (contains) {
-                    noteIsIncluded[i] = true;
-                }
-            }
+            int musicLength = n * 200;
             
             //****  Create a new MIDI sequence with 24 ticks per beat and 10 tracks
             int NUM_TRACKS = 10;
-            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ,24,NUM_TRACKS);
+            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ, 24, NUM_TRACKS);
             
             // Obtain all MIDI tracks from the sequence and set up each track
             Track[] t = new Track[NUM_TRACKS];
@@ -219,7 +206,7 @@ public class BabbittGenerator {
             /*
             // write the MIDI sequence to a MIDI file
             File file = new File(filename);
-            MidiSystem.write(seq,1,file);
+            MidiSystem.write(seq, 1, file);
             */
             
             return seq;

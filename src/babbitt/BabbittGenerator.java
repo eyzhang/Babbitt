@@ -47,8 +47,9 @@ public class BabbittGenerator {
     
     // generate a random note
     private static int randNote() {
-        int NOTE_MAX = 120;
-        int NOTE_MIN = 0;
+        // range of the piano keyboard
+        int NOTE_MAX = 108;
+        int NOTE_MIN = 9;
         
         boolean isIncluded = false;
         int randNote = (int) (weightedRandom0() * (NOTE_MAX - NOTE_MIN) + NOTE_MIN);
@@ -131,20 +132,20 @@ public class BabbittGenerator {
      *
      * @param n Music length, in seconds 
      * @param noteIsIncluded indicates whether the pitch classes are to be included
+     * @param tracks
      * @return MIDI sequence
      */
-    public static Sequence generate(int n, boolean[] noteIsIncluded) {        
+    public static Sequence generate(int n, boolean[] noteIsIncluded, int numTracks) {        
         try {
             // music length in seconds
             int musicLength = n * 200;
             
-            //****  Create a new MIDI sequence with 24 ticks per beat and 10 tracks
-            int NUM_TRACKS = 10;
-            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ, 24, NUM_TRACKS);
+            //****  Create a new MIDI sequence with 24 ticks per beat and specified number of tracks
+            Sequence seq = new Sequence(javax.sound.midi.Sequence.PPQ, 24, numTracks);
             
             // Obtain all MIDI tracks from the sequence and set up each track
-            Track[] t = new Track[NUM_TRACKS];
-            for (int i = 0; i < NUM_TRACKS; i++) {
+            Track[] t = new Track[numTracks];
+            for (int i = 0; i < numTracks; i++) {
                 t[i] = seq.createTrack();
                 
                 //****  General MIDI sysex -- turn on General MIDI sound set 
@@ -188,7 +189,7 @@ public class BabbittGenerator {
             }
             
             // start adding notes to each track
-            for (int i = 0; i < NUM_TRACKS; i++) {
+            for (int i = 0; i < numTracks; i++) {
                 while (t[i].ticks() < musicLength) {
                     // randomly choose between adding rests and notes
                     double nextIsNote = weightedRandom0();

@@ -25,7 +25,7 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
     // to store length and pitchClasses inputted by the user
     private Sequence seq;
-    
+    private int c;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,7 +53,7 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        PitchClasses.setText("Pitch classes");
+        PitchClasses.setText("Pitch classes to include");
 
         PitchClassesIn.setText("00 01 02 03 04 05 06 07 08 09 10 11");
 
@@ -66,12 +66,12 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
 
         LengthIn.setText("60");
 
-        Length.setText("Length (seconds)");
+        Length.setText("Approximate length (seconds)");
 
         jLabel1.setText("Welcome to the Babbitt Generator!");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel2.setText("Only include the pitch classes you want to allow in the output file.");
+        jLabel2.setText("Please format the pitch classes as two-digit integers from 00 to 11.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,14 +84,14 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addContainerGap(36, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(PitchClasses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Length, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PitchClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Length))
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PitchClassesIn)
+                            .addComponent(PitchClassesIn, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                             .addComponent(LengthIn))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -109,9 +109,11 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
                     .addComponent(LengthIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Length))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PitchClasses)
-                    .addComponent(PitchClassesIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PitchClassesIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(PitchClasses, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,25 +132,31 @@ public class BabbittGeneratorUI extends javax.swing.JFrame {
         // generate MIDI sequence
         seq = BabbittGenerator.generate(length, pitchClasses);
         
+        /*
         try {
-            MidiSystem.write(seq, 1, new File("Babbitt.mid"));
+            File file = new File("Babbitt.mid");
+            //Create the file
+            if (file.createNewFile()){
+                System.out.println("File is created!");
+            } else {
+                System.out.println("File already exists.");
+            }
+            MidiSystem.write(seq, 1, file);
         } catch (IOException ex) {
             Logger.getLogger(BabbittGeneratorUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
         // launch the file chooser
-        fileChooser.showSaveDialog(this);
+        c = fileChooser.showSaveDialog(null);
 
     }//GEN-LAST:event_OkButtonActionPerformed
 
     private void fileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileChooserActionPerformed
-        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+        if (c == JFileChooser.APPROVE_OPTION) {
+             File file = fileChooser.getSelectedFile();         
             try {
-                System.out.println("midi saved?");
                 // save the MIDI sequence to file
                 MidiSystem.write(seq, 1, file);
-                
                 System.out.println("midi saved!");
             }
             catch (IOException e) {
